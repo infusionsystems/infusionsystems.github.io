@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+canvas {
+    display: block;
+}
+
+/* New: Container to hold and center both text and dropdown */
+.center-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the entire block */
+    text-align: center;
+    width: 100%;
+}
+
+#overlay-text {
+    /* Removed absolute positioning, now positions relative to center-container */
+    display: block;
+    margin-bottom: 20px; /* Adds space between the title and the dropdown */
+    color: #0F0;
+    font-family: monospace;
+    font-size: 30px;
+    animation: fadeInOut 5s linear infinite;
+    /* Added text shadow for a subtle glow effect */
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5); 
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    25% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Dropdown Styles (adjusted for flow within the container) */
+.contact-dropdown-container {
+    /* Removed absolute positioning */
+    display: inline-block; /* Helps center the block itself */
+    font-family: monospace;
+    color: #0F0;
+}
+
+.dropdown-checkbox {
+    display: none; /* Hide the actual checkbox */
+}
+
+.dropdown-label {
+    cursor: pointer;
+    padding: 8px 12px;
+    border: 1px solid #0F0; /* Green border */
+    background-color: transparent; /* Transparent background */
+    border-radius: 3px;
+    transition: background-color 0.3s, color 0.3s;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); 
+}
+
+.dropdown-label:hover {
+    background-color: #0F0; /* Green background on hover */
+    color: #000; /* Black text on hover for contrast */
+}
+
+.dropdown-content {
+    display: none; /* Hide content by default */
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #000; /* Black background */
+    border: 1px solid #0F0; /* Green border */
+    color: #0F0; /* Green text */
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); 
+}
+
+/* Show the content when the checkbox is checked */
+.dropdown-checkbox:checked ~ .dropdown-content {
+    display: block;
+}
+
+/* Style for the link inside the dropdown content (The requested fix) */
+.dropdown-content a {
+    color: #0F0;             /* Same green color as the matrix theme */
+    text-decoration: none;   /* Removes the default browser underline */
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); 
+}
+
+.dropdown-content a:hover {
+    text-decoration: underline; /* Add underline on hover for better usability */
+}
