@@ -15,23 +15,43 @@ const drops = [];
 
 function initializeDrops() {
     drops.length = 0;
+    // Calculate columns based on current width
+    columns = canvas.width / fontSize;
     for (let i = 0; i < columns; i++) {
         drops[i] = 1;
     }
 }
 initializeDrops();
 
-function draw() {
+let lastTime = 0;
+const fps = 30;
+const interval = 1000 / fps;
+
+function draw(currentTime) {
+    requestAnimationFrame(draw);
+
+    const deltaTime = currentTime - lastTime;
+    if (deltaTime < interval) return;
+
+    lastTime = currentTime - (deltaTime % interval);
+
     // Fading trail effect
+    // Lower opacity = longer trails. 0.05 is good standard.
     context.fillStyle = 'rgba(0, 0, 0, 0.05)';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Matrix Rain
     context.fillStyle = '#0F0';
     context.font = fontSize + 'px monospace';
+
     for (let i = 0; i < drops.length; i++) {
-        // Use robust bracket notation for random character access
         const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+        // Add a little randomness to color brightness for "depth"
+        if (Math.random() > 0.95) {
+             context.fillStyle = '#FFF'; // Sparkle effect
+        } else {
+             context.fillStyle = '#0F0';
+        }
+        
         context.fillText(text, i * fontSize, drops[i] * fontSize);
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
@@ -41,13 +61,12 @@ function draw() {
     }
 }
 
-// Reverting to the simple, reliable setInterval loop at 30 FPS
-setInterval(draw, 30);
+// Start the loop
+requestAnimationFrame(draw);
 
 // Handle window resize event
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    columns = canvas.width / fontSize;
     initializeDrops();
 });
