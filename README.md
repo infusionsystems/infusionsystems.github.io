@@ -1,1 +1,1 @@
-Hello World. All rights reserved.. etc etc.
+Hello User.
